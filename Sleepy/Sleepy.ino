@@ -7,7 +7,14 @@
 #define AVERAGE_LIGHT 400
 #define UPDATE_ANGER_TIME 500
 
+// Anger states
+#define ANGER1 (MAX_ANGER / 5)
+#define ANGER2 2 * (MAX_ANGER / 5)
+#define ANGER3 3 * (MAX_ANGER / 5)
+#define ANGER4 4 * (MAX_ANGER / 5)
+
 #define MAX_CALM_LIGHT 100
+#define MAX_ANALOG_VALUE 255
 
 // Devices
 Ultrasonic mouth(12, 13);
@@ -19,7 +26,9 @@ int blueLed = 9;
 
 // Emotion Variable
 int anger = 0;
+int RPower = 0;
 int GPower = 0;
+int BPower = 0;
 
 // Ambient calibration
 int nearestWall = 300;
@@ -48,23 +57,27 @@ void loop()
     calmDown();
   else
     getAnger();
-    
+
   if (!anger)
     calmBreathe();
   else
-    analogWrite(greenLed, 0);
+    applyAnger();
+
+  Serial.println(anger);
 }
 
 void calmBreathe()
 {
   if (millis() - initalFadeTime > (MAX_FADE_TIME / MAX_CALM_LIGHT))
   {
-    if (GPower > MAX_CALM_LIGHT){
+    if (GPower > MAX_CALM_LIGHT)
+    {
       isIncreasing = -1; // Starts to decrease
       delay(150);
     }
-      
-    if (GPower <= 0){
+
+    if (GPower <= 0)
+    {
       isIncreasing = 1; // Starts to decrease
       delay(150);
     }
@@ -76,11 +89,46 @@ void calmBreathe()
   }
 }
 
+void applyAnger()
+{
+  if (anger < ANGER1)
+  {
+    RPower = BPower = 0;
+    GPower = anger;
+  }
+  else if (anger < ANGER2)
+  {
+    RPower = 0;
+    GPower = anger;
+    BPower = anger - ANGER1;
+  }
+  else if (anger < ANGER3)
+  {
+    RPower = GPower = 0;
+    BPower = anger - ANGER2;
+  }
+  else if (anger < ANGER4)
+  {
+    GPower = 0;
+    BPower = anger - ANGER2;
+    RPower = anger - ANGER3;
+  }
+  else{
+    RPower = anger - ANGER4;
+    BPower = GPower = 0;
+  }
+    
+
+  analogWrite(redLed, RPower);
+  analogWrite(greenLed, GPower);
+  analogWrite(blueLed, BPower);
+}
+
 void getAnger()
 {
   if (millis() - initialUpdateTime > UPDATE_ANGER_TIME)
   {
-    if (anger < MAX_ANGER)
+    if (anger <= MAX_ANGER)
       anger++;
     initialUpdateTime = millis();
   }
@@ -109,26 +157,29 @@ int averageDistance()
 
 bool iAmAlone()
 {
-  Serial.println(mouth.distanceRead());
   if (mouth.distanceRead() < nearestWall * DETECTION_RANGE)
   {
-    delay(1);
+    delay(3);
     if (mouth.distanceRead() < nearestWall * DETECTION_RANGE)
     {
-      delay(1);
-      if (mouth.distanceRead() < nearestWall * DETECTION_RANGE)
-      {
+        Serial.println("US FALSE");
+        Serial.println(mouth.distanceRead());
+        Serial.println(nearestWall * DETECTION_RANGE);
+        
         return false;
-      }
     }
   }
+  Serial.println("US TRUE");
   return true;
 }
 
 bool itIsDark()
-{ 
-  if (analogRead(tailLDR) < AVERAGE_LIGHT){
+{
+  if (analogRead(tailLDR) < AVERAGE_LIGHT)
+  {
+    Serial.println("LIGHT TRUE");
     return true;
   }
+  Serial.println("LIGHT FALSE");
   return false;
 }
