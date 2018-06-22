@@ -2,9 +2,9 @@
 _Development of an emotive robot to raise awareness about the use of lamps by Otacilio Maia and Yago Albert, Cesar School students._
 
 ## Table of contents
-- The Problem
-- The Solution
-- The Components
+- [The Problem](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-problem)
+- [The Solution](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-solution)
+- [The Components](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-components)
 
 ## The Problem
 
