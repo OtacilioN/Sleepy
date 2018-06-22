@@ -47,4 +47,5 @@ The natural state of Sleepy is sleeping, so when the anger variable is set to ze
 - Paint
 
 ## The Circuit
+[Available on Tinkercad](https://www.tinkercad.com/things/bKDtHvI3uIr)
 ![lockup](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy.png)
