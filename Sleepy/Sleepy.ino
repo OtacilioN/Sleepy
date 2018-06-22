@@ -4,8 +4,8 @@
 #define MAX_ANGER 777
 #define MAX_FADE_TIME 1000
 #define DETECTION_RANGE 0.8
-#define AVERAGE_LIGHT 400
-#define UPDATE_ANGER_TIME 500
+#define AVERAGE_LIGHT 100
+#define UPDATE_ANGER_TIME 5
 
 // Anger states
 #define ANGER1 (MAX_ANGER / 5)
@@ -17,7 +17,8 @@
 #define MAX_ANALOG_VALUE 255
 
 // Devices
-Ultrasonic mouth(12, 13);
+//Ultrasonic mouth(12, 13);
+int pir = 12;
 int tailLDR = A0;
 int voiceBuzzer = 3;
 int redLed = 5;
@@ -46,8 +47,9 @@ void setup()
   pinMode(redLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
   pinMode(blueLed, OUTPUT);
+  pinMode(voiceBuzzer, OUTPUT);
   delay(10);
-  nearestWall = averageDistance();
+//  nearestWall = averageDistance();
   delay(10);
 }
 
@@ -60,10 +62,36 @@ void loop()
 
   if (!anger)
     calmBreathe();
+  else if (anger >= MAX_ANGER - 20)
+    angryMode();
   else
     applyAnger();
 
   Serial.println(anger);
+}
+
+void angryMode()
+{
+  if (millis() - initalFadeTime > 300)
+  {
+    if (RPower > 254)
+    {
+      isIncreasing = -1; // Starts to decrease
+      RPower = 0;
+      tone(voiceBuzzer, 200 + millis() % 14000);
+    }
+
+    else
+    {
+      isIncreasing = 1; // Starts to decrease
+      RPower = 255;
+      noTone(voiceBuzzer);
+    }
+
+    analogWrite(redLed, RPower);
+
+    initalFadeTime = millis();
+  }
 }
 
 void calmBreathe()
@@ -76,7 +104,7 @@ void calmBreathe()
       delay(150);
     }
 
-    if (GPower <= 0)
+    if (GPower < 10)
     {
       isIncreasing = 1; // Starts to decrease
       delay(150);
@@ -91,6 +119,7 @@ void calmBreathe()
 
 void applyAnger()
 {
+  noTone(voiceBuzzer);
   if (anger < ANGER1)
   {
     RPower = BPower = 0;
@@ -113,11 +142,11 @@ void applyAnger()
     BPower = anger - ANGER2;
     RPower = anger - ANGER3;
   }
-  else{
+  else
+  {
     RPower = anger - ANGER4;
     BPower = GPower = 0;
   }
-    
 
   analogWrite(redLed, RPower);
   analogWrite(greenLed, GPower);
@@ -144,42 +173,20 @@ void calmDown()
   }
 }
 
-int averageDistance()
-{
-  int average = 0;
-  for (int x = 0; x < CALIBRATION_SAMPLES; x++)
-  {
-    average = average + mouth.distanceRead();
-    delay(2);
-  }
-  return average / CALIBRATION_SAMPLES;
-}
-
 bool iAmAlone()
 {
-  if (mouth.distanceRead() < nearestWall * DETECTION_RANGE)
-  {
-    delay(3);
-    if (mouth.distanceRead() < nearestWall * DETECTION_RANGE)
-    {
-        Serial.println("US FALSE");
-        Serial.println(mouth.distanceRead());
-        Serial.println(nearestWall * DETECTION_RANGE);
-        
-        return false;
-    }
-  }
-  Serial.println("US TRUE");
-  return true;
+  Serial.print("iAmAlone: ");
+  Serial.println(!digitalRead(pir));
+  return (!digitalRead(pir));
 }
 
 bool itIsDark()
 {
   if (analogRead(tailLDR) < AVERAGE_LIGHT)
   {
-    Serial.println("LIGHT TRUE");
+    Serial.println("DARK TRUE");
     return true;
   }
-  Serial.println("LIGHT FALSE");
+  Serial.println("DARK FALSE");
   return false;
 }
