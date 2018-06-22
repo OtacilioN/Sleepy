@@ -5,6 +5,7 @@ _Development of an emotive robot to raise awareness about the use of lamps by Ot
 - [The Problem](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-problem)
 - [The Solution](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-solution)
 - [The Components](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-components)
+- [The Circuit](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-circuit)
 
 ## The Problem
 
@@ -44,3 +45,6 @@ The natural state of Sleepy is sleeping, so when the anger variable is set to ze
 - Recycled cardboard
 - Styrofoam Ball
 - Paint
+
+## The Circuit
+![lockup](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy.png)
