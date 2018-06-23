@@ -1,5 +1,3 @@
-#include <Ultrasonic.h>
-
 #define CALIBRATION_SAMPLES 10
 #define MAX_ANGER 777
 #define MAX_FADE_TIME 1000
@@ -17,7 +15,6 @@
 #define MAX_ANALOG_VALUE 255
 
 // Devices
-//Ultrasonic mouth(12, 13);
 int pir = 12;
 int tailLDR = A0;
 int voiceBuzzer = 3;
@@ -48,9 +45,6 @@ void setup()
   pinMode(greenLed, OUTPUT);
   pinMode(blueLed, OUTPUT);
   pinMode(voiceBuzzer, OUTPUT);
-  delay(10);
-//  nearestWall = averageDistance();
-  delay(10);
 }
 
 void loop()
