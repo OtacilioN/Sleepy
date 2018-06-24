@@ -6,6 +6,7 @@ _Development of an emotive robot to raise awareness about the use of lamps by Ot
 - [The Solution](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-solution)
 - [The Components](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-components)
 - [The Circuit](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-circuit)
+- [Table Of Connections](https://github.com/OtacilioN/Sleepy/blob/master/README.md#table-of-connections)
 
 ## The Problem
 
@@ -49,3 +50,12 @@ The natural state of Sleepy is sleeping, so when the anger variable is set to ze
 ## The Circuit
 [Available on Tinkercad](https://www.tinkercad.com/things/bKDtHvI3uIr)
 ![lockup](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy.png)
+
+## Table of connections
+
+| Component | pin0 | pin1           | pin2 | pin3 |
+|-----------|------|----------------|------|------|
+| LED RGB   | ~5   | GND            | ~6   | ~9   |
+| PIR       | 5V   | 12             | GND  | ---- |
+| LDR       | 5V   | A0 + Pull Down | ---- | ---- |
+| Buzzer    | ~3   | GND            | ---- | ---- |
