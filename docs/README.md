@@ -65,4 +65,4 @@ The natural state of Sleepy is sleeping, so when the anger variable is set to ze
 
 [Download the released version 1.0.0 here](https://github.com/OtacilioN/Sleepy/archive/v1.0.0.zip)
 
-[Source code available on GitHub :octocat:](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy/Sleepy.ino)
+[Source code available on GitHub](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy/Sleepy.ino)
