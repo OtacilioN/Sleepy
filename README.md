@@ -7,6 +7,7 @@ _Development of an emotive robot to raise awareness about the use of lamps by Ot
 - [The Components](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-components)
 - [The Circuit](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-circuit)
 - [Table Of Connections](https://github.com/OtacilioN/Sleepy/blob/master/README.md#table-of-connections)
+- [The Code](https://github.com/OtacilioN/Sleepy/blob/master/README.md#the-code)
 
 ## The Problem
 
@@ -59,3 +60,9 @@ The natural state of Sleepy is sleeping, so when the anger variable is set to ze
 | PIR       | 5V   | 12             | GND  | ---- |
 | LDR       | 5V   | A0 + Pull Down | ---- | ---- |
 | Buzzer    | ~3   | GND            | ---- | ---- |
+
+## The Code
+
+[Download the released version 1.0.0 here](https://github.com/OtacilioN/Sleepy/archive/v1.0.0.zip)
+
+[Source code available on GitHub :octocat:](https://github.com/OtacilioN/Sleepy/blob/master/Sleepy/Sleepy.ino)
